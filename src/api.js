@@ -8,15 +8,22 @@ export async function apiGet(path, onStart = () => {}) {
 			this.log('warn', `Axios Client has not been initialised. GET ${path} not sent`)
 			return
 		}
+		let response
 		try {
-			const response = await this.axios.get(path)
-			if (this.config.verbose) {
-				this.log('debug', `Data Recieved from ${path}:\n${JSON.stringify(response.data)}`)
-			}
-			this.checkStatus(InstanceStatus.Ok)
-			this.parseResponse(response.data)
+			response = await this.axios.get(path)
 		} catch (error) {
 			this.logError(error)
+			return
+		}
+		if (this.config.verbose) {
+			this.log('debug', `Data Recieved from ${path}:\n${JSON.stringify(response.data)}`)
+		}
+		this.checkStatus(InstanceStatus.Ok)
+		// A failure here is a module bug, not a connection fault, so don't change the status
+		try {
+			this.parseResponse(response.data)
+		} catch (error) {
+			this.log('error', `Could not process response from ${path}: ${error?.stack ?? error}`)
 		}
 	})
 }
@@ -40,7 +47,14 @@ export async function apiPut(type, channels, field, value) {
 				await this.axios.put(path, body)
 				this.checkStatus(InstanceStatus.Ok)
 			} catch (error) {
-				this.logError(error)
+				// The device rejecting a write (eg Set Pulse on a channel not in pulse mode) is not a connection fault.
+				// 406 is excluded, as it means the Firmware setting is wrong
+				const status = error.response?.status
+				if (status >= 400 && status < 500 && status !== 406) {
+					this.log('warn', `Device rejected PUT ${path} (${status}): ${JSON.stringify(error.response.data)}`)
+				} else {
+					this.logError(error)
+				}
 			}
 		})
 	}
