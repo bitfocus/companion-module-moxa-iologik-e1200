@@ -1,0 +1,26 @@
+{
+	"id": "moxa-iologik-e1200",
+	"name": "moxa-iologik-e1200",
+	"shortname": "ioLogik E1200 Series",
+	"description": "Companion module for Moxa ioLogik E1200 series",
+	"version": "0.0.0",
+	"license": "MIT",
+	"repository": "git+https://github.com/bitfocus/companion-module-moxa-iologik-e1200.git",
+	"bugs": "https://github.com/bitfocus/companion-module-moxa-iologik-e1200/issues",
+	"maintainers": [
+		{
+			"name": "Per Røine",
+			"email": "per@bitfocus.io"
+		}
+	],
+	"runtime": {
+		"type": "node22",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../src/main.js"
+	},
+	"legacyIds": [],
+	"manufacturer": "Moxa",
+	"products": ["E1210", "E1211", "E1212", "E1213", "E1214"],
+	"keywords": ["DIO", "DI", "DO", "GPIO", "GPI", "GPO", "Relay", "ioLogik"]
+}

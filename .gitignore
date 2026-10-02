@@ -1,0 +1,8 @@
+.vscode/
+.yarn/
+node_modules/
+package-lock.json
+/pkg
+/pkg.tgz
+moxa-iologik-e1200-*.tgz
+DEBUG-*

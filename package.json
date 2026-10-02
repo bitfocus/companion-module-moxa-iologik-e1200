@@ -1,0 +1,32 @@
+{
+	"name": "moxa-iologik-e1200",
+	"version": "0.1.0",
+	"main": "src/main.js",
+	"type": "module",
+	"scripts": {
+		"format": "prettier -w .",
+		"package": "companion-module-build",
+		"lint:raw": "eslint",
+		"lint": "yarn lint:raw ."
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bitfocus/companion-module-moxa-iologik-e1200.git"
+	},
+	"dependencies": {
+		"@companion-module/base": "~1.12.1",
+		"axios": "^1.20.0",
+		"p-queue": "~8.1.1"
+	},
+	"devDependencies": {
+		"@companion-module/tools": "^2.8.0",
+		"eslint": "^9.39.5",
+		"prettier": "^3.9.9"
+	},
+	"engines": {
+		"node": "^22.14"
+	},
+	"prettier": "@companion-module/tools/.prettierrc.json",
+	"packageManager": "yarn@4.18.0"
+}
